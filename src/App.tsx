@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,19 +7,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import SplashScreen from "./components/SplashScreen"; // Make sure this file exists
+import SplashScreen from "./components/SplashScreen";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 3000); // 3-second splash duration
-    return () => clearTimeout(timer);
-  }, []);
+  const handleSplashClick = () => {
+    setShowSplash(false);
+  };
 
   return (
     <ThemeProvider defaultTheme="dark">
@@ -28,7 +25,9 @@ const App = () => {
           <Toaster />
           <Sonner />
           {showSplash ? (
-            <SplashScreen />
+            <div onClick={handleSplashClick}>
+              <SplashScreen />
+            </div>
           ) : (
             <BrowserRouter>
               <Routes>
